@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestión de Alumnos</title>
-    <link rel="stylesheet" href="css/gestion.css" />
+    <link rel="stylesheet" href="../../../public/css/gestion.css" />
 </head>
-
 <body>
     <main class="app-shell">
         <section class="app-header">
@@ -307,7 +305,6 @@
         </div>
     </div>
 
-    <script src="js/gestion.js"></script>
+   <script src="streepsoft/public/js/gestion.js"></script>
 </body>
-
 </html>
