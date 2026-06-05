@@ -42,7 +42,7 @@
         <nav class="sidebar-links">
             <a href="#">Estadísticas</a>
             <a href="#">Gestión de alumnos</a>
-            <a href="#">Perfil de alumnos</a>
+            <a href="/streepsoft/app/views/jugadores/show.php">Perfil de alumnos</a>
             <a href="#">Actualización de datos</a>
             <a href="#">Registro de deuda</a>
         </nav>
@@ -90,9 +90,9 @@
                 </div>
             </a>
 
-            <a href="#" class="custom-card">
+            <a href="/streepsoft/app/views/jugadores/show.php" class="custom-card">
                 <div class="card-icon">
-                    <img src="/streepsoft/public/Image/users.png" alt="icon">
+                    <img src="/streepsoft/public/Image/Perfil.png" alt="icon">
                 </div>
                 <div class="card-body">
                     <h2 class="card-title">Perfil de Alumno</h2>
