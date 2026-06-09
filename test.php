@@ -6,4 +6,5 @@ if($pdo) {
 } else {
     echo "Error al conectar";
 }
+
 ?>
