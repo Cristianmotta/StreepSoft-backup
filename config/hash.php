@@ -7,4 +7,6 @@ $hash = password_hash($contrasena, PASSWORD_BCRYPT);
 
 echo $hash;
 
+
+
 ?>

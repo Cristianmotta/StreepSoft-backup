@@ -14,6 +14,11 @@
                 
                 <img src="/streepsoft/public/Image/CopColombiaInternacional.png" alt="Logo" class="logoLogin" draggable="false">
 
+        <h1>Escriba su correo por favor</h1>
+        <p>Revise su correo</p>
+        <label>Email</label>
+        <input type="text" name="recuperacion" placeholder="email">
+        <button class="buttonLogin" type="submit">Enviar</button>
                 <h1 class="h1-recover">Escriba su correo por favor</h1>
                 
                 <p class="message-code">Le enviaremos un código de verificación para restablecer su contraseña.</p>
