@@ -11193,3 +11193,95 @@ Stack trace:
 [07-Sep-2026 15:36:03 America/Bogota] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
 [07-Sep-2026 15:36:16 America/Bogota] PHP Warning:  Undefined array key "numero_acudiente" in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
 [07-Sep-2026 15:36:16 America/Bogota] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
+[13-Sep-2026 19:58:29 America/Bogota] PHP Warning:  require(C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:29 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php:41
+Stack trace:
+#0 C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php(45): {closure}('51fcf4e06c07cc0...', 'C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\streepsoft\vendor\autoload.php(22): ComposerAutoloaderInit423bc3dff5b31cb213875ba2a55dd374::getLoader()
+#2 C:\xampp\htdocs\streepsoft\app\controllers\ReporteController.php(10): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\streepsoft\public\index.php(304): require_once('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\streepsoft\index.php(3): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+  thrown in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:33 America/Bogota] PHP Warning:  require(C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:33 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php:41
+Stack trace:
+#0 C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php(45): {closure}('51fcf4e06c07cc0...', 'C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\streepsoft\vendor\autoload.php(22): ComposerAutoloaderInit423bc3dff5b31cb213875ba2a55dd374::getLoader()
+#2 C:\xampp\htdocs\streepsoft\app\controllers\ReporteController.php(10): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\streepsoft\public\index.php(304): require_once('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\streepsoft\index.php(3): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+  thrown in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:35 America/Bogota] PHP Warning:  require(C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:35 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php:41
+Stack trace:
+#0 C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php(45): {closure}('51fcf4e06c07cc0...', 'C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\streepsoft\vendor\autoload.php(22): ComposerAutoloaderInit423bc3dff5b31cb213875ba2a55dd374::getLoader()
+#2 C:\xampp\htdocs\streepsoft\app\controllers\ReporteController.php(10): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\streepsoft\public\index.php(304): require_once('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\streepsoft\index.php(3): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+  thrown in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:40 America/Bogota] PHP Warning:  require(C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:40 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php:41
+Stack trace:
+#0 C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php(45): {closure}('51fcf4e06c07cc0...', 'C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\streepsoft\vendor\autoload.php(22): ComposerAutoloaderInit423bc3dff5b31cb213875ba2a55dd374::getLoader()
+#2 C:\xampp\htdocs\streepsoft\app\controllers\ReporteController.php(10): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\streepsoft\public\index.php(304): require_once('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\streepsoft\index.php(3): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+  thrown in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:45 America/Bogota] PHP Warning:  require(C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[13-Sep-2026 19:58:45 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required 'C:\xampp\htdocs\streepsoft\vendor\composer/../thecodingmachine/safe/deprecated/apc.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php:41
+Stack trace:
+#0 C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php(45): {closure}('51fcf4e06c07cc0...', 'C:\\xampp\\htdocs...')
+#1 C:\xampp\htdocs\streepsoft\vendor\autoload.php(22): ComposerAutoloaderInit423bc3dff5b31cb213875ba2a55dd374::getLoader()
+#2 C:\xampp\htdocs\streepsoft\app\controllers\ReporteController.php(10): require_once('C:\\xampp\\htdocs...')
+#3 C:\xampp\htdocs\streepsoft\public\index.php(304): require_once('C:\\xampp\\htdocs...')
+#4 C:\xampp\htdocs\streepsoft\index.php(3): require_once('C:\\xampp\\htdocs...')
+#5 {main}
+  thrown in C:\xampp\htdocs\streepsoft\vendor\composer\autoload_real.php on line 41
+[15-Sep-2026 22:01:02 America/Bogota] Home - quickLoginDisponible: false
+[15-Sep-2026 22:01:02 America/Bogota] Home - COOKIE quick_login_data: false
+[15-Sep-2026 22:01:02 America/Bogota] Home - COOKIE logout_manual: false
+[15-Sep-2026 22:01:12 America/Bogota] Intento de login fallido: contraseña incorrecta: cdavidg4396@gmail.com
+[15-Sep-2026 22:01:21 America/Bogota] Login exitoso: cdavidg4396@gmail.com
+[15-Sep-2026 22:01:21 America/Bogota] Login exitoso: cdavidg4396@gmail.com
+[15-Sep-2026 22:01:21 America/Bogota] Dashboard: Error obteniendo recaudación por mes: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[15-Sep-2026 22:01:21 America/Bogota] Dashboard: Error obteniendo recaudación total: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[15-Sep-2026 22:01:21 America/Bogota] Dashboard: Error obteniendo deuda total: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'monto' in 'field list'
+[15-Sep-2026 22:01:24 America/Bogota] Dashboard: Error obteniendo recaudación por mes: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[15-Sep-2026 22:01:24 America/Bogota] Dashboard: Error obteniendo recaudación total: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[15-Sep-2026 22:01:24 America/Bogota] Dashboard: Error obteniendo deuda total: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'monto' in 'field list'
+[15-Sep-2026 22:27:30 America/Bogota] Quick login cookie establecida para: cdavidg4396@gmail.com
+[15-Sep-2026 22:27:30 America/Bogota] Session expirada por timeout: cdavidg4396@gmail.com
+[15-Sep-2026 22:27:30 America/Bogota] Home - quickLoginDisponible: true
+[15-Sep-2026 22:27:30 America/Bogota] Home - COOKIE quick_login_data: true
+[15-Sep-2026 22:27:30 America/Bogota] Home - COOKIE logout_manual: false
+[15-Sep-2026 22:27:32 America/Bogota] Login exitoso: cdavidg4396@gmail.com
+[15-Sep-2026 22:27:32 America/Bogota] Quick login cookie limpiada tras uso exitoso
+[15-Sep-2026 22:27:32 America/Bogota] Quick login exitoso: cdavidg4396@gmail.com
+[15-Sep-2026 22:27:32 America/Bogota] Dashboard: Error obteniendo recaudación por mes: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[15-Sep-2026 22:27:32 America/Bogota] Dashboard: Error obteniendo recaudación total: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[15-Sep-2026 22:27:32 America/Bogota] Dashboard: Error obteniendo deuda total: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'monto' in 'field list'
+[16-Sep-2026 19:04:39 America/Bogota] Home - quickLoginDisponible: false
+[16-Sep-2026 19:04:39 America/Bogota] Home - COOKIE quick_login_data: false
+[16-Sep-2026 19:04:39 America/Bogota] Home - COOKIE logout_manual: false
+[16-Sep-2026 19:04:53 America/Bogota] Home - quickLoginDisponible: false
+[16-Sep-2026 19:04:53 America/Bogota] Home - COOKIE quick_login_data: false
+[16-Sep-2026 19:04:53 America/Bogota] Home - COOKIE logout_manual: false
+[16-Sep-2026 19:05:20 America/Bogota] Intento de login fallido: contraseña incorrecta: cdavidg4396@gmail.com
+[16-Sep-2026 19:05:28 America/Bogota] Intento de login fallido: contraseña incorrecta: cdavidg4396@gmail.com
+[16-Sep-2026 19:05:41 America/Bogota] Login exitoso: cdavidg4396@gmail.com
+[16-Sep-2026 19:05:41 America/Bogota] Login exitoso: cdavidg4396@gmail.com
+[16-Sep-2026 19:05:41 America/Bogota] Dashboard: Error obteniendo recaudación por mes: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[16-Sep-2026 19:05:41 America/Bogota] Dashboard: Error obteniendo recaudación total: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'streepsoft.pagos' doesn't exist
+[16-Sep-2026 19:05:41 America/Bogota] Dashboard: Error obteniendo deuda total: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'monto' in 'field list'
+[16-Sep-2026 19:06:00 America/Bogota] PHP Warning:  Undefined array key "numero_acudiente" in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
+[16-Sep-2026 19:06:00 America/Bogota] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
+[16-Sep-2026 19:06:07 America/Bogota] PHP Warning:  Undefined array key "numero_acudiente" in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
+[16-Sep-2026 19:06:07 America/Bogota] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
+[16-Sep-2026 19:06:13 America/Bogota] PHP Warning:  Undefined array key "numero_acudiente" in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366
+[16-Sep-2026 19:06:13 America/Bogota] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\streepsoft\app\views\jugadores\gestionJugadores\index.php on line 366

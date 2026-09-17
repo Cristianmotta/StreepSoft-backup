@@ -268,6 +268,105 @@
                 <div class="linea-divisora"></div>
             </div>
 
+            <!-- Configuracion de pagos--->
+            <section class="configuracion">
+                <div class="card-configuracion">
+                    <span class="icon-park-outline--setting-config"></span>
+                    <div class="configuracion-texto">
+                        <h2>configuracion de pagos</h2>
+                        <p>Configure las fechas limites para los pagos de los alumnos</p>
+                    </div>
+                </div>
+
+                <div class="grid">
+                    <div class="card-1">
+                        <div class="limite-pago">
+                            <span class="lets-icons--date-fill"></span>
+                            <div class="text-limite">
+                                <h2>Fecha de pago</h2>
+                                <p>Selecciona el día máximo para realizar el pago mensual.</p>
+                            </div>
+                        </div>
+
+                        <div class="input-limite">
+                            <label>Dia de Pago</label>
+                            <input type="date">
+                        </div>
+                    </div>
+
+                    <div class="card-2">
+                        <div class="periodo-gracia">
+                            <span class="ant-design--history-outlined"></span>
+                            <div class="text-periodo">
+                                <h2>Periodo de Gracia</h2>
+                                <p>Días adicionales antes de marcar el pago como mora.</p>
+                            </div>
+                        </div>
+
+                        <div class="input-periodo">
+                            <label>Dias de Gracia</label>
+                            <select name="" id="">
+                                <option value="">Sin dias de gracia</option>
+                                <option value="">5 dias</option>
+                                <option value="">10 dias</option>
+                                <option value="">15 dias</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="card-3">
+                        <div class="resumen">
+                            <span class="mynaui--danger-square-solid"></span>
+                            <div class="texto-resumen">
+                                <h2>Resumen</h2>
+                                <p>Vista previa de la configuraciòn</p>
+                            </div>
+                        </div>
+
+                        <div class="card-resumen">
+                            <div class="fecha">
+                                <div class="fecha-pago-texto">
+                                    <h3>Fecha limite</h3>
+                                    <p>Dia 5 de cada mes</p>
+                                </div>
+                                <div class="fecha-gracia-texto">
+                                    <h3>Periodo de Gracia</h3>
+                                    <p>Dia 5 de gracia</p>
+                                </div>
+                            </div>
+
+                            <div class="advertencia">
+                                <div class="card-advertencia">
+                                    <span class="jam--triangle-danger-f"></span>
+                                    <div class="text-advertencia">
+                                        <h3>Inicio de mora</h3>
+                                        <p>Dia 11 de cada mes</p>
+                                    </div>
+                                </div>
+
+                                <div class="card-recordar">
+                                    <span class="hugeicons--idea-01"></span>
+                                    <div class="text-recordar">
+                                        <p> Si un alumno no realiza el pago antes del día 5, 
+                                            tendrá 5 días adicionales antes de ser marcado en mora.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="btn-configuracion">
+                    <button class="btn-guardar">
+                        Guardar cambios
+                    </button>
+                    
+                    <button class="btn-cancelar">
+                        cancelar
+                    </button>
+                </div>
+            </section>
+
             <!-- Modal: Editar información -->
             <div class="modal-overlay" id="modalEditarInfo">
                 <div class="modal-caja">
@@ -326,6 +425,8 @@
                 </div>
             </div>
         </div>
+
+
 
     </div>
 
