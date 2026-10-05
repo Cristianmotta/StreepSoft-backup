@@ -91,14 +91,18 @@ class DeudaController extends Controller
         $valorPagado = round($valor * (1 - ($descuento / 100)), 2);
 
         try {
-            $this->deudaModel->registrarPago($idDeuda, [
+            $ok = $this->deudaModel->registrarPago($idDeuda, [
                 'fecha_pago' => $fechaPago,
                 'id_metodo_pago' => $idMetodoPago,
                 'concepto' => $concepto !== '' ? $concepto : null,
                 'descuento_porcentaje' => $descuento,
                 'valor_pagado' => $valorPagado,
             ]);
-        } catch (Exception $e) {
+
+            if (!$ok) {
+                $this->redirect('/streepsoft/deudas/' . $idDeuda . '/pago?error=no_guardado');
+            }
+        } catch (Throwable $e) {
             error_log('Deudas (registrarPago): ' . $e->getMessage());
             $this->redirect('/streepsoft/deudas/' . $idDeuda . '/pago?error=no_guardado');
         }

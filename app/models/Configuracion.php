@@ -60,4 +60,16 @@ class Configuracion extends Model
             return false;
         }
     }
+
+
+    public function guardar(string $clave, string $valor): bool
+    {
+        $sql = "
+            INSERT INTO configuracion (clave, valor) VALUES (:clave, :valor)
+            ON DUPLICATE KEY UPDATE valor = :valor2
+        ";
+        
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([':clave' => $clave, ':valor' => $valor, ':valor2' => $valor]);
+    }
 }

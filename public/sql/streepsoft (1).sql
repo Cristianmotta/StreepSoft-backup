@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-09-2026 a las 18:38:19
+-- Tiempo de generación: 03-10-2026 a las 08:09:05
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,7 +39,9 @@ CREATE TABLE `actividad` (
 --
 
 INSERT INTO `actividad` (`id`, `id_usuario`, `descripcion`, `creado_en`) VALUES
-(1, 5, 'Actualizó su información de perfil', '2026-09-02 00:10:49');
+(1, 5, 'Actualizó su información de perfil', '2026-09-02 00:10:49'),
+(2, 5, 'Actualizó su información de perfil', '2026-09-17 19:22:36'),
+(3, 5, 'Actualizó su información de perfil', '2026-09-17 19:25:42');
 
 -- --------------------------------------------------------
 
@@ -111,6 +113,25 @@ CREATE TABLE `ciclos_anio` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `configuracion`
+--
+
+CREATE TABLE `configuracion` (
+  `clave` varchar(50) NOT NULL,
+  `valor` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `configuracion`
+--
+
+INSERT INTO `configuracion` (`clave`, `valor`) VALUES
+('dias_gracia', '5'),
+('dia_cobro', '5');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `configuracion_ciclos`
 --
 
@@ -156,7 +177,7 @@ CREATE TABLE `deudas` (
 --
 
 INSERT INTO `deudas` (`id_deudas`, `id_jugadores`, `matricula`, `mes`, `anio`, `totalidad`, `fecha_limite_pago`, `fecha_pago`, `id_metodo_pago`, `concepto`, `descuento_porcentaje`, `valor_pagado`, `pago`, `id_tipo_becas`) VALUES
-(11, 26, 90000.00, 'Septiembre', '2026', 80000.00, '2026-09-01', '2026-09-01', 3, 'Matrícula y mensualidad de inscripción', 0, 170000.00, 'pagado', 1);
+(22, 27, 90000.00, 'Octubre', '2026', 80000.00, '2026-10-03', '2026-10-03', 3, 'Matrícula y mensualidad de inscripción', 0, 170000.00, 'pagado', 1);
 
 -- --------------------------------------------------------
 
@@ -176,7 +197,8 @@ CREATE TABLE `documentos` (
 --
 
 INSERT INTO `documentos` (`id_documento`, `id_jugadores`, `documento`, `id_tipo_documento`) VALUES
-(23, 26, '1056789922', 2);
+(23, 26, '1056789922', 2),
+(24, 27, '1001120123', 2);
 
 -- --------------------------------------------------------
 
@@ -231,6 +253,37 @@ CREATE TABLE `historial_ciclo_jugadores` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `historial_deuda`
+--
+
+CREATE TABLE `historial_deuda` (
+  `id_historial` int(11) NOT NULL,
+  `id_jugadores` int(11) NOT NULL,
+  `id_deuda_original` int(11) DEFAULT NULL,
+  `mes` enum('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre') NOT NULL,
+  `anio` year(4) NOT NULL,
+  `matricula` decimal(10,2) DEFAULT 0.00,
+  `totalidad` decimal(10,2) DEFAULT 0.00,
+  `fecha_limite_pago` date NOT NULL,
+  `fecha_pago` date NOT NULL,
+  `id_metodo_pago` int(11) DEFAULT NULL,
+  `id_tipo_becas` int(11) NOT NULL,
+  `concepto` varchar(255) DEFAULT NULL,
+  `descuento_porcentaje` int(11) DEFAULT 0,
+  `valor_pagado` decimal(10,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `historial_deuda`
+--
+
+INSERT INTO `historial_deuda` (`id_historial`, `id_jugadores`, `id_deuda_original`, `mes`, `anio`, `matricula`, `totalidad`, `fecha_limite_pago`, `fecha_pago`, `id_metodo_pago`, `id_tipo_becas`, `concepto`, `descuento_porcentaje`, `valor_pagado`) VALUES
+(4, 26, NULL, 'Septiembre', '2026', 0.00, 80000.00, '2026-09-25', '2026-09-01', 3, 0, 'Matrícula y mensualidad de inscripción', 0, 170000.00),
+(5, 26, 20, 'Octubre', '2026', 0.00, 80000.00, '2026-10-05', '2026-10-02', 3, 1, 'Mensualidad de Septiembre 2026', 0, 80000.00);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `instructor`
 --
 
@@ -251,11 +304,11 @@ CREATE TABLE `instructor` (
 --
 
 INSERT INTO `instructor` (`id_instructor`, `foto`, `nombres`, `apellidos`, `edad`, `numero_celular`, `id_categorias`, `descripcion`, `estado`) VALUES
-(1, '034123d83ab0e2a2ac54502288581907.jpg', 'Crisitan Ivan', 'Saenz', 20, '+57 3000000000', 3, '-', 'activo'),
-(2, '4c454c45b18eb3ddf68c827f2cb9ae9d.jpg', 'Julian David', 'Munevar', 20, '+57 3000000000', 2, '-', 'activo'),
-(3, 'f4c569340c3f3d5edd08d4e6a59e4c3e.jpg', 'Estaban', 'Moreno Rojas', 25, '+57 3000000000', 4, '-', 'activo'),
-(4, 'cc2c8f2c01ee635baf88b3a342680b37.jpg', 'Luis Camilo', 'Beltran', 25, '+57 3000000000', 2, '-', 'activo'),
-(6, 'e7e5d5cd2b831c8a8d1c6f70a6524fee.jpg', 'Yonatan Javier', 'verga', 20, '+57 3000000000', 1, '-', 'activo');
+(1, '034123d83ab0e2a2ac54502288581907.jpg', 'Crisitan Ivan', 'Saenz', 20, '+57 3000000000', 3, '-', 'inactivo'),
+(2, '4c454c45b18eb3ddf68c827f2cb9ae9d.jpg', 'Julian David', 'Munevar', 20, '+57 3000000000', 2, 'Estadio la Aurora', 'activo'),
+(3, 'f4c569340c3f3d5edd08d4e6a59e4c3e.jpg', 'Estaban', 'Moreno Rojas', 25, '+57 3000000000', 4, 'Estadio la Aurora', 'activo'),
+(4, 'cc2c8f2c01ee635baf88b3a342680b37.jpg', 'Luis Camilo', 'Beltran', 25, '+57 3000000000', 2, 'Estadio la Aurora', 'activo'),
+(6, 'e7e5d5cd2b831c8a8d1c6f70a6524fee.jpg', 'Yonatan Javier', 'verga', 20, '+57 3000000000', 1, 'Estadio la Aurora', 'activo');
 
 -- --------------------------------------------------------
 
@@ -283,7 +336,8 @@ CREATE TABLE `jugadores` (
 --
 
 INSERT INTO `jugadores` (`id_jugadores`, `foto`, `nombres`, `apellidos`, `fecha_nacimiento`, `iniciales`, `id_responsable`, `id_categorias`, `created_at`, `id_eps`, `id_instructor`, `estado`) VALUES
-(26, '337bbefc09f6f552f29db79eac14d5a2.jpg', 'Kevin', 'Martinez jorge', '2011-09-01', 'MGK', 9, 4, '2026-09-02 02:57:02', 4, 1, 'activo');
+(26, '337bbefc09f6f552f29db79eac14d5a2.jpg', 'Kevin', 'Martinez jorge', '2011-09-01', 'MGK', 9, 4, '2026-09-02 02:57:02', 4, 1, 'activo'),
+(27, NULL, 'cristian', 'lopez motta', '2012-10-03', 'CML', NULL, 4, '2026-10-03 06:07:35', 3, 2, 'activo');
 
 -- --------------------------------------------------------
 
@@ -325,7 +379,8 @@ CREATE TABLE `responsables` (
 --
 
 INSERT INTO `responsables` (`id_responsable`, `nombres`, `apellidos`, `id_tipo_documento`, `identificacion`, `numero_celular`) VALUES
-(9, 'David', 'Martinez', 3, '30947844', '3124500000');
+(9, 'David', 'Martinez', 3, '30947844', '3124500000'),
+(10, 'DAVID', 'MOTTA', 3, '30947844', '3128990223');
 
 -- --------------------------------------------------------
 
@@ -397,7 +452,7 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id`, `nombre_completo`, `usuario`, `documento_identidad`, `telefono`, `foto`, `contrasena`, `creado_en`, `pin_recuperacion`, `token_password`, `expired_session`, `request_password`) VALUES
 (1, 'David mora', 'davi1@gmail.com', NULL, NULL, NULL, '$2y$10$aFuRwi7s9XI9m0nDGWM92OEqSXninYWWIg5RexHdyVtd4EpFbX5DW', '0000-00-00 00:00:00', '$2y$10$uVpBPJnHhM96bhIH2fzFS.Cy3OTnWOlvJPpTaoM3CX1W0TURplSfW', '4f5a39adaecee0ee98e902f88bdb268e7a2675607282b61211893a968bc564aa', '2026-08-04 05:40:14', 0),
 (2, 'Noni', 'Noni@gmail.com', NULL, NULL, NULL, '$2y$10$aFuRwi7s9XI9m0nDGWM92OEqSXninYWWIg5RexHdyVtd4EpFbX5DW', '2026-05-17 23:20:48', NULL, NULL, NULL, 0),
-(5, 'cristian', 'cdavidg4396@gmail.com', '1099922278', '3146649074', '9aa2c989998307649473b19f5069a901.png', '$2y$10$kW.AWrCQUAUATwRnvuZCMOUkeRlkfsQjn888H7ST8.C/fwwgqjEsC', '2026-05-26 15:54:10', '$2y$10$N8M44q.KCAvOq.2uIVuKqunMGmPevTVeAkJSXSQIp7f32waVY38jW', 'ef384ea181bba152d426ea67e005965f169356701d8846fa226e960058846403', '2026-08-21 00:10:29', 0),
+(5, 'Cristian David', 'cdavidg4396@gmail.com', '1099922278', '3146649074', 'c1dc5037af81a90d3dc6854c1ad5fe62.png', '$2y$10$kW.AWrCQUAUATwRnvuZCMOUkeRlkfsQjn888H7ST8.C/fwwgqjEsC', '2026-05-26 15:54:10', '$2y$10$N8M44q.KCAvOq.2uIVuKqunMGmPevTVeAkJSXSQIp7f32waVY38jW', 'ef384ea181bba152d426ea67e005965f169356701d8846fa226e960058846403', '2026-08-21 00:10:29', 0),
 (6, 'JuanS', 'jsebastian1315@gmail.com', NULL, NULL, NULL, '$2y$10$StsqBLHimiWOmybVBZxeHuw647eiOScW4jTFzNclez3hKUbOkR.0W', '2026-05-26 23:19:13', '$2y$10$aTDDQCYkr.HaM/jb/0VdOe6F9NgZfaoB4MY28rLKkJ9ZwRFULX63K', '9bba13f36a47a4570ea8ef80d5919ecbf8862a215f9dc4448ddd541c067fd4af', '2026-07-20 07:58:29', 0),
 (7, 'David Angel', 'davidangel11222@gmail.com', NULL, NULL, NULL, '$2y$10$rIIaAD07wWtThQHaLq6M3uaZaC4W1fKCrjGaNuw/1Pbn9VdVjItcm', '2026-07-23 03:58:21', NULL, NULL, NULL, 0);
 
@@ -439,7 +494,7 @@ CREATE TABLE `vista_jugadores` (
 --
 DROP TABLE IF EXISTS `vista_jugadores`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_jugadores`  AS SELECT `j`.`id_jugadores` AS `id_jugadores`, `j`.`foto` AS `foto`, `j`.`apellidos` AS `apellidos`, `j`.`nombres` AS `nombres`, `j`.`iniciales` AS `iniciales`, `j`.`id_categorias` AS `id_categorias`, `j`.`id_eps` AS `id_eps`, `j`.`id_instructor` AS `id_instructor`, `j`.`id_responsable` AS `id_responsable`, concat(coalesce(`r`.`nombres`,''),' ',coalesce(`r`.`apellidos`,'')) AS `responsable_nombre`, `dc`.`id_tipo_documento` AS `id_tipo_documento`, `dc`.`documento` AS `documentos`, `td`.`nombre` AS `tipo_documento`, `j`.`fecha_nacimiento` AS `fecha_nacimiento`, timestampdiff(YEAR,`j`.`fecha_nacimiento`,curdate()) AS `edad`, `c`.`nombre` AS `categoria`, `tb`.`nombre` AS `tipo_beca`, `i`.`nombres` AS `instructor`, CASE `j`.`estado` WHEN 'activo' THEN 'Activo' WHEN 'inactivo' THEN 'Inactivo' WHEN 'retirado' THEN 'Retirado' ELSE 'Activo' END AS `estado`, `d`.`fecha_pago` AS `fecha_pago`, `d`.`fecha_limite_pago` AS `fecha_limite_pago`, `d`.`pago` AS `pago` FROM (((((((`jugadores` `j` join `categorias` `c` on(`j`.`id_categorias` = `c`.`id_categorias`)) left join `deudas` `d` on(`d`.`id_jugadores` = `j`.`id_jugadores`)) left join `tipos_beca` `tb` on(`tb`.`id_tipo_beca` = `d`.`id_tipo_becas`)) left join `documentos` `dc` on(`dc`.`id_jugadores` = `j`.`id_jugadores`)) left join `tipo_documento` `td` on(`td`.`id_tipo_documento` = `dc`.`id_tipo_documento`)) left join `instructor` `i` on(`i`.`id_instructor` = `j`.`id_instructor`)) left join `responsables` `r` on(`r`.`id_responsable` = `j`.`id_responsable`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_jugadores`  AS SELECT `j`.`id_jugadores` AS `id_jugadores`, `j`.`foto` AS `foto`, `j`.`apellidos` AS `apellidos`, `j`.`nombres` AS `nombres`, `j`.`iniciales` AS `iniciales`, `j`.`id_categorias` AS `id_categorias`, `j`.`id_eps` AS `id_eps`, `j`.`id_instructor` AS `id_instructor`, `j`.`id_responsable` AS `id_responsable`, concat(coalesce(`r`.`nombres`,''),' ',coalesce(`r`.`apellidos`,'')) AS `responsable_nombre`, `dc`.`id_tipo_documento` AS `id_tipo_documento`, `dc`.`documento` AS `documentos`, `td`.`nombre` AS `tipo_documento`, `j`.`fecha_nacimiento` AS `fecha_nacimiento`, timestampdiff(YEAR,`j`.`fecha_nacimiento`,curdate()) AS `edad`, `c`.`nombre` AS `categoria`, `tb`.`nombre` AS `tipo_beca`, `i`.`nombres` AS `instructor`, CASE `j`.`estado` WHEN 'activo' THEN 'Activo' WHEN 'inactivo' THEN 'Inactivo' WHEN 'retirado' THEN 'Retirado' ELSE 'Activo' END AS `estado`, `d`.`fecha_pago` AS `fecha_pago`, `d`.`fecha_limite_pago` AS `fecha_limite_pago`, `d`.`pago` AS `pago` FROM (((((((`jugadores` `j` join `categorias` `c` on(`j`.`id_categorias` = `c`.`id_categorias`)) left join `deudas` `d` on(`d`.`id_jugadores` = `j`.`id_jugadores` and `d`.`pago` in ('pendiente','mora'))) left join `tipos_beca` `tb` on(`tb`.`id_tipo_beca` = `d`.`id_tipo_becas`)) left join `documentos` `dc` on(`dc`.`id_jugadores` = `j`.`id_jugadores`)) left join `tipo_documento` `td` on(`td`.`id_tipo_documento` = `dc`.`id_tipo_documento`)) left join `instructor` `i` on(`i`.`id_instructor` = `j`.`id_instructor`)) left join `responsables` `r` on(`r`.`id_responsable` = `j`.`id_responsable`)) ;
 
 --
 -- Índices para tablas volcadas
@@ -482,6 +537,12 @@ ALTER TABLE `ciclos_anio`
   ADD UNIQUE KEY `anio` (`anio`);
 
 --
+-- Indices de la tabla `configuracion`
+--
+ALTER TABLE `configuracion`
+  ADD PRIMARY KEY (`clave`);
+
+--
 -- Indices de la tabla `configuracion_ciclos`
 --
 ALTER TABLE `configuracion_ciclos`
@@ -519,6 +580,12 @@ ALTER TABLE `historial_ciclo_jugadores`
   ADD UNIQUE KEY `uq_ciclo_jugador` (`id_ciclo`,`id_jugadores`),
   ADD KEY `fk_historial_jugador` (`id_jugadores`),
   ADD KEY `fk_historial_categoria` (`id_categorias`);
+
+--
+-- Indices de la tabla `historial_deuda`
+--
+ALTER TABLE `historial_deuda`
+  ADD PRIMARY KEY (`id_historial`);
 
 --
 -- Indices de la tabla `instructor`
@@ -577,7 +644,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `actividad`
 --
 ALTER TABLE `actividad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `cambios_masivos_estado`
@@ -613,13 +680,13 @@ ALTER TABLE `configuracion_ciclos`
 -- AUTO_INCREMENT de la tabla `deudas`
 --
 ALTER TABLE `deudas`
-  MODIFY `id_deudas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_deudas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `eps`
@@ -634,6 +701,12 @@ ALTER TABLE `historial_ciclo_jugadores`
   MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `historial_deuda`
+--
+ALTER TABLE `historial_deuda`
+  MODIFY `id_historial` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `instructor`
 --
 ALTER TABLE `instructor`
@@ -643,7 +716,7 @@ ALTER TABLE `instructor`
 -- AUTO_INCREMENT de la tabla `jugadores`
 --
 ALTER TABLE `jugadores`
-  MODIFY `id_jugadores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_jugadores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `metodo_pago`
@@ -655,7 +728,7 @@ ALTER TABLE `metodo_pago`
 -- AUTO_INCREMENT de la tabla `responsables`
 --
 ALTER TABLE `responsables`
-  MODIFY `id_responsable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_responsable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_beca`

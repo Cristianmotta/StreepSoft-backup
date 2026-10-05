@@ -12,7 +12,7 @@ class Deuda extends Model
     public function obtenerTodasConEstado(): array
     {
         $sql = "
-            SELECT
+            SELECT DISTINCT
                 d.id_deudas,
                 d.id_jugadores,
                 d.matricula,
@@ -162,31 +162,192 @@ class Deuda extends Model
 
 
     /**
-     * Marca un ciclo de deuda como pagado: guarda la fecha, el método
-     * de pago (id_metodo_pago, FK a la tabla metodo_pago), el concepto,
-     * el % de descuento aplicado y el valor final ya con el descuento.
+     * Registra el pago y completa el ciclo:
+     * 1) mueve la deuda pagada a historial_deuda;
+     * 2) elimina la deuda de la tabla activa;
+     * 3) crea automáticamente la deuda del siguiente mes.
+     *
+     * La operación es transaccional: si cualquiera de los pasos falla,
+     * todo se revierte.
      */
     public function registrarPago(int $idDeuda, array $datos): bool
     {
+        if ($idDeuda <= 0) {
+            throw new InvalidArgumentException('ID de deuda inválido');
+        }
+
+        $this->pdo->beginTransaction();
+
+        try {
+            $deuda = $this->queryOne(
+                'SELECT * FROM deudas WHERE id_deudas = ? FOR UPDATE',
+                [$idDeuda]
+            );
+
+            if ($deuda === null) {
+                throw new RuntimeException('La deuda no existe o ya fue procesada');
+            }
+
+            if (($deuda['pago'] ?? '') === 'pagado') {
+                throw new RuntimeException('La deuda ya está marcada como pagada');
+            }
+
+            // Preparar los datos finales que quedarán en historial.
+            $deuda['fecha_pago'] = $datos['fecha_pago'];
+            $deuda['id_metodo_pago'] = $datos['id_metodo_pago'];
+            $deuda['concepto'] = $datos['concepto'] ?? ($deuda['concepto'] ?? null);
+            $deuda['descuento_porcentaje'] = $datos['descuento_porcentaje'] ?? 0;
+            $deuda['valor_pagado'] = $datos['valor_pagado'];
+
+            $historialModel = new HistorialDeuda($this->pdo);
+
+            if (!$historialModel->archivar($deuda)) {
+                throw new RuntimeException('No se pudo archivar la deuda en el historial');
+            }
+
+            // La deuda pagada deja de pertenecer a la tabla de deudas activas.
+            if (!$this->execute(
+                'DELETE FROM deudas WHERE id_deudas = ?',
+                [$idDeuda]
+            )) {
+                throw new RuntimeException('No se pudo retirar la deuda pagada de la lista activa');
+            }
+
+            // Crear el siguiente ciclo mensual.
+            $this->crearSiguienteDeuda($deuda);
+
+            $this->pdo->commit();
+            return true;
+        } catch (Throwable $e) {
+            if ($this->pdo->inTransaction()) {
+                $this->pdo->rollBack();
+            }
+
+            error_log('Deuda::registrarPago: ' . $e->getMessage());
+            throw $e;
+        }
+    }
+
+    /**
+     * Crea la deuda mensual inmediatamente posterior al ciclo pagado.
+     * No crea duplicados y no genera mensualidad para jugadores inactivos.
+     */
+    private function crearSiguienteDeuda(array $deuda): int
+    {
+        $idJugador = (int) $deuda['id_jugadores'];
+
+        $jugador = $this->queryOne(
+            'SELECT estado FROM jugadores WHERE id_jugadores = ? LIMIT 1',
+            [$idJugador]
+        );
+
+        if ($jugador === null) {
+            throw new RuntimeException('El jugador asociado a la deuda no existe');
+        }
+
+        if (($jugador['estado'] ?? 'activo') !== 'activo') {
+            // Jugador retirado/inactivo: no se genera el siguiente ciclo.
+            return 0;
+        }
+
+        $meses = [
+            1 => 'Enero',
+            2 => 'Febrero',
+            3 => 'Marzo',
+            4 => 'Abril',
+            5 => 'Mayo',
+            6 => 'Junio',
+            7 => 'Julio',
+            8 => 'Agosto',
+            9 => 'Septiembre',
+            10 => 'Octubre',
+            11 => 'Noviembre',
+            12 => 'Diciembre',
+        ];
+
+        $mesAnterior = array_search($deuda['mes'], $meses, true);
+
+        if ($mesAnterior === false) {
+            throw new RuntimeException('Mes inválido en la deuda pagada');
+        }
+
+        $mesSiguiente = $mesAnterior + 1;
+        $anioSiguiente = (int) $deuda['anio'];
+
+        if ($mesSiguiente > 12) {
+            $mesSiguiente = 1;
+            $anioSiguiente++;
+        }
+
+        $nombreMesSiguiente = $meses[$mesSiguiente];
+
+        // Seguridad contra duplicados.
+        $yaExiste = $this->queryOne(
+            'SELECT id_deudas
+             FROM deudas
+             WHERE id_jugadores = ? AND mes = ? AND anio = ?
+             LIMIT 1',
+            [$idJugador, $nombreMesSiguiente, $anioSiguiente]
+        );
+
+        if ($yaExiste !== null) {
+            return (int) $yaExiste['id_deudas'];
+        }
+
+        // El siguiente mes es solamente mensualidad: la matrícula no se repite.
+        $mensualidad = max(
+            0,
+            (float) $deuda['totalidad'] - (float) ($deuda['matricula'] ?? 0)
+        );
+
+        // Día de cobro configurable desde la tabla configuracion.
+        $configuracion = new Configuracion($this->pdo);
+        $diaCobro = (int) ($configuracion->obtenerPorClave('dia_cobro') ?? 5);
+        $diaCobro = max(1, min(31, $diaCobro));
+
+        $diasMes = cal_days_in_month(
+            CAL_GREGORIAN,
+            $mesSiguiente,
+            $anioSiguiente
+        );
+
+        $diaReal = min($diaCobro, $diasMes);
+        $fechaLimite = sprintf(
+            '%04d-%02d-%02d',
+            $anioSiguiente,
+            $mesSiguiente,
+            $diaReal
+        );
+
         $sql = "
-            UPDATE deudas SET
-                pago = 'pagado',
-                fecha_pago = ?,
-                id_metodo_pago = ?,
-                concepto = ?,
-                descuento_porcentaje = ?,
-                valor_pagado = ?
-            WHERE id_deudas = ?
+            INSERT INTO deudas (
+                id_jugadores,
+                matricula,
+                mes,
+                anio,
+                totalidad,
+                fecha_limite_pago,
+                id_tipo_becas,
+                pago,
+                concepto
+            ) VALUES (?, 0, ?, ?, ?, ?, ?, 'pendiente', ?)
         ";
 
-        return $this->execute($sql, [
-            $datos['fecha_pago'],
-            $datos['id_metodo_pago'],
-            $datos['concepto'],
-            $datos['descuento_porcentaje'],
-            $datos['valor_pagado'],
-            $idDeuda,
+        $exito = $this->execute($sql, [
+            $idJugador,
+            $nombreMesSiguiente,
+            $anioSiguiente,
+            $mensualidad,
+            $fechaLimite,
+            (int) $deuda['id_tipo_becas'],
+            'Mensualidad ' . $nombreMesSiguiente . ' ' . $anioSiguiente,
         ]);
+
+        if (!$exito) {
+            throw new RuntimeException('No se pudo crear la deuda del siguiente mes');
+        }
+
+        return $this->lastInsertId();
     }
 
     public function marcarVencidaComoMora(): int

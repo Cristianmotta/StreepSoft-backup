@@ -17,12 +17,48 @@ class PerfilAdminController extends Controller
             'instructores' => $estadisticaModel->totalInstructores()
         ];
 
+        $configuracionModel = new Configuracion($this->pdo);
+        $diaCobro = (int) ($configuracionModel->obtenerPorClave('dia_cobro') ?? 5);
+        $diasGracia = (int) ($configuracionModel->obtenerPorClave('dias_gracia') ?? 0);
+
         $this->view('perfilAdmin/perfil', [
             'admin' => $admin,
             'actividad' => $actividad,
-            'stats' => $stats
+            'stats' => $stats,
+            'diaCobro' => $diaCobro,
+            'diasGracia' => $diasGracia,
         ]);
     }
+
+    public function guardarConfiguracionPagos(): void
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->redirect('/perfil/administrador');
+        }
+
+        if (!$this->validateCSRFToken($_POST['_token'] ?? '')){
+            $this->redirect('/perfil/administrador?error=csrf');
+        }
+
+        $diaCobro = (int) ($_POST['dia_cobro'] ?? 0);
+        $diasGracia = (int) ($_POST['dias_gracia'] ?? 0);
+
+        if ($diaCobro < 1 || $diaCobro > 31){
+            $this->redirect('/perfil/administrador?error=dia_invalido');
+        }
+
+        if ($diasGracia < 0 || $diasGracia > 30){
+            $this->redirect('/perfil/administrador?error=gracia_invalida');
+        }
+
+        $configuracionModel = new Configuracion($this->pdo);
+        $configuracionModel->actualizar('dia_cobro', (string) $diaCobro);
+        $configuracionModel->actualizar('dias_gracia', (string) $diasGracia);
+
+        $this->redirect('/perfil/administrador?success=configuracion_guardada');
+    }
+
+
     public function actualizarPerfil(): void
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
