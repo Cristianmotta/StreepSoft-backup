@@ -23,14 +23,15 @@ class ConfiguracionController extends Controller
         $estadisticas = $this->usuarioModel->obtenerEstadisticas();
 
         // Obtener configuraciones actuales
-        $diaGracia = $this->configuracionModel->obtenerPorClave('dias_gracia') ?? 5;
-        $diaPago = $this->configuracionModel->obtenerPorClave('dia_pago') ?? 1;
+        $configPagos = $this->configuracionModel->obtenerConfiguracionPagos();
+        $diaGracia = $configPagos['dias_gracia'];
+        $diaPago = $configPagos['dia_cobro'];
 
         $this->view('configuracion/index', [
             'usuario' => $usuario,
             'estadisticas' => $estadisticas,
             'dia_gracia' => $diaGracia,
-            'dia_pago' => $diaPago,
+            'dia_cobro' => $diaPago,
             'titulo' => 'Configuración'
         ]);
     }
@@ -54,7 +55,7 @@ class ConfiguracionController extends Controller
         }
 
         $diaGracia = (int) ($_POST['dia_gracia'] ?? 5);
-        $diaPago = (int) ($_POST['dia_pago'] ?? 1);
+        $diaPago = (int) ($_POST['dia_cobro'] ?? $_POST['dia_pago'] ?? 1);
 
         // Validaciones
         if ($diaGracia < 0 || $diaGracia > 30) {
@@ -74,7 +75,7 @@ class ConfiguracionController extends Controller
             $this->configuracionModel->actualizar('dias_gracia', (string) $diaGracia);
             
             // Guardar/actualizar día de pago
-            $this->configuracionModel->actualizar('dia_pago', (string) $diaPago);
+            $this->configuracionModel->actualizar('dia_cobro', (string) $diaPago);
 
             http_response_code(200);
             echo json_encode([

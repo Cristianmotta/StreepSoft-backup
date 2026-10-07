@@ -168,16 +168,7 @@ class GeneradorDeudas
 
     private function obtenerDiaCobro(): int
     {
-        $stmt = $this->pdo->prepare(
-            "SELECT valor
-             FROM configuracion
-             WHERE clave = 'dia_cobro'
-             LIMIT 1"
-        );
-        $stmt->execute();
-
-        $dia = (int) ($stmt->fetchColumn() ?: 5);
-        return max(1, min(31, $dia));
+        return (new Configuracion($this->pdo))->obtenerDiaCobro();
     }
 
     private function generarFechaLimite(
@@ -202,39 +193,17 @@ class GeneradorDeudas
         ];
 
         try {
-            $diasGracia = 5;
-
-            $stmtConfig = $this->pdo->prepare(
-                "SELECT valor
-                 FROM configuracion
-                 WHERE clave = 'dias_gracia'
-                 LIMIT 1"
-            );
-            $stmtConfig->execute();
-
-            $valorGracia = $stmtConfig->fetchColumn();
-            if ($valorGracia !== false) {
-                $diasGracia = max(0, (int) $valorGracia);
-            }
-
-            // $diasGracia es un entero validado; se inserta directamente
-            // porque MySQL no acepta de forma fiable un placeholder en
-            // la unidad de INTERVAL.
-            $diasGraciaSql = (int) $diasGracia;
+            $diasGracia = (new Configuracion($this->pdo))->obtenerDiasGracia();
 
             $sql = "
                 UPDATE deudas
                 SET pago = 'mora'
                 WHERE pago = 'pendiente'
-                  AND CURDATE() > DATE_ADD(
-                      fecha_limite_pago,
-                      INTERVAL {$diasGraciaSql} DAY
-                  )
+                  AND DATEDIFF(CURDATE(), fecha_limite_pago) > :dias_gracia
             ";
 
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
-
+            $stmt->execute([':dias_gracia' => $diasGracia]);
             $resultado['actualizadas'] = $stmt->rowCount();
         } catch (Throwable $e) {
             error_log('GeneradorDeudas::actualizarMoras - ' . $e->getMessage());

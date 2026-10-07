@@ -287,6 +287,9 @@
                 <?php if (($_GET['error'] ?? '') === 'gracia_invalida'): ?>
                     <p class="modal-mensaje modal-mensaje-error">Elige un perido de gracia válido.</p>
                 <?php endif; ?>
+                <?php if (($_GET['error'] ?? '') === 'configuracion_guardado'): ?>
+                    <p class="modal-mensaje modal-mensaje-error">No se pudo guardar la configuración de pagos.</p>
+                <?php endif; ?>
                 <?php if (($_GET['error'] ?? '') === 'gracia_invalida'): ?>
                     <p class="modal-mensaje modal-mensaje-error">Elige un período de gracia válido.</p>
                 <?php endif; ?>
@@ -307,7 +310,7 @@
                             <div class="input-limite">
                                 <label>Dia de Pago</label>
                                 <select name="dia_cobro" id="selectDiaCobro">
-                                    <?php for ($dia = 1; $dia <= 28; $dia++): ?>
+                                    <?php for ($dia = 1; $dia <= 31; $dia++): ?>
                                         <option value="<?= $dia ?>" <?= $dia === $diaCobro  ? 'selected'  : '' ?>>
                                             Dia <?= $dia ?> del mes
                                         </option>
@@ -328,10 +331,11 @@
                             <div class="input-periodo">
                                 <label>Dias de Gracia</label>
                                 <select name="dias_gracia" id="selectDiasGracia">
-                                    <option value="0"  <?= $diasGracia === 0 ? 'selected' : '' ?>>Sin dias de gracia</option>
-                                    <option value="5"  <?= $diasGracia === 5 ? 'selected' : '' ?>>5 dias</option>
-                                    <option value="10" <?= $diasGracia === 10 ? 'selected' : '' ?>>10 dias</option>
-                                    <option value="15" <?= $diasGracia === 15 ? 'selected' : '' ?>>15 dias</option>
+                                    <?php for ($gracia = 0; $gracia <= 30; $gracia++): ?>
+                                        <option value="<?= $gracia ?>" <?= $gracia === $diasGracia ? 'selected' : '' ?>>
+                                            <?= $gracia === 0 ? 'Sin dias de gracia' : $gracia . ' ' . ($gracia === 1 ? 'dia' : 'dias') ?>
+                                        </option>
+                                    <?php endfor; ?>
                                 </select>
                             </div>
                         </div>
@@ -362,25 +366,23 @@
                                         <span class="jam--triangle-danger-f"></span>
                                         <div class="text-advertencia">
                                             <h3>Inicio de mora</h3>
-                                            <p id="resumenInicioMora">Dia <?= $diaCobro + $diasGracia ?> de cada mes</p>
+                                            <p id="resumenInicioMora">A partir del día <?= $diaCobro + $diasGracia + 1 ?> de cada mes*</p>
                                         </div>
                                     </div>
 
                                     <div class="card-recordar">
                                         <span class="hugeicons--idea-01"></span>
                                         <div class="text-recordar">
-                                            <?php  if ($diasGracia > 0): ?>
-                                                <p> Si un alumno no realiza el pago antes del día <?= $diaCobro ?>, 
-                                                tendrá <?= $diasGracia ?> días adicionales antes de ser marcado en mora.</p>
+                                            <?php if ($diasGracia > 0): ?>
+                                                <p>El pago vence el día <?= $diaCobro ?>. Después tendrá <?= $diasGracia ?> días de gracia; la mora inicia al terminar ese periodo.</p>
                                             <?php else: ?>
-                                                <p>
-                                                    Si un alumno no realiza el pago antes del día <?= $diaCobro ?>,
-                                                    será marcado en mora ese mismo día.</p>
+                                                <p>El pago vence el día <?= $diaCobro ?> y la mora inicia al día siguiente si continúa pendiente.</p>
                                             <?php endif; ?>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <p class="configuracion-nota">* En meses con menos días, se utilizará automáticamente el último día disponible.</p>
                         </div>
                     </div>
 

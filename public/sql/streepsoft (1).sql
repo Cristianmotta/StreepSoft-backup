@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-10-2026 a las 08:09:05
+-- Tiempo de generación: 05-10-2026 a las 04:32:54
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -177,7 +177,7 @@ CREATE TABLE `deudas` (
 --
 
 INSERT INTO `deudas` (`id_deudas`, `id_jugadores`, `matricula`, `mes`, `anio`, `totalidad`, `fecha_limite_pago`, `fecha_pago`, `id_metodo_pago`, `concepto`, `descuento_porcentaje`, `valor_pagado`, `pago`, `id_tipo_becas`) VALUES
-(22, 27, 90000.00, 'Octubre', '2026', 80000.00, '2026-10-03', '2026-10-03', 3, 'Matrícula y mensualidad de inscripción', 0, 170000.00, 'pagado', 1);
+(24, 29, 90000.00, 'Noviembre', '2026', 80000.00, '2026-10-03', '2026-10-03', 3, 'Matrícula y mensualidad de inscripción', 0, 170000.00, 'pagado', 1);
 
 -- --------------------------------------------------------
 
@@ -197,8 +197,7 @@ CREATE TABLE `documentos` (
 --
 
 INSERT INTO `documentos` (`id_documento`, `id_jugadores`, `documento`, `id_tipo_documento`) VALUES
-(23, 26, '1056789922', 2),
-(24, 27, '1001120123', 2);
+(26, 29, '1001120123', 3);
 
 -- --------------------------------------------------------
 
@@ -273,14 +272,6 @@ CREATE TABLE `historial_deuda` (
   `valor_pagado` decimal(10,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `historial_deuda`
---
-
-INSERT INTO `historial_deuda` (`id_historial`, `id_jugadores`, `id_deuda_original`, `mes`, `anio`, `matricula`, `totalidad`, `fecha_limite_pago`, `fecha_pago`, `id_metodo_pago`, `id_tipo_becas`, `concepto`, `descuento_porcentaje`, `valor_pagado`) VALUES
-(4, 26, NULL, 'Septiembre', '2026', 0.00, 80000.00, '2026-09-25', '2026-09-01', 3, 0, 'Matrícula y mensualidad de inscripción', 0, 170000.00),
-(5, 26, 20, 'Octubre', '2026', 0.00, 80000.00, '2026-10-05', '2026-10-02', 3, 1, 'Mensualidad de Septiembre 2026', 0, 80000.00);
-
 -- --------------------------------------------------------
 
 --
@@ -336,8 +327,7 @@ CREATE TABLE `jugadores` (
 --
 
 INSERT INTO `jugadores` (`id_jugadores`, `foto`, `nombres`, `apellidos`, `fecha_nacimiento`, `iniciales`, `id_responsable`, `id_categorias`, `created_at`, `id_eps`, `id_instructor`, `estado`) VALUES
-(26, '337bbefc09f6f552f29db79eac14d5a2.jpg', 'Kevin', 'Martinez jorge', '2011-09-01', 'MGK', 9, 4, '2026-09-02 02:57:02', 4, 1, 'activo'),
-(27, NULL, 'cristian', 'lopez motta', '2012-10-03', 'CML', NULL, 4, '2026-10-03 06:07:35', 3, 2, 'activo');
+(29, NULL, 'David Kevin', 'Martinez', '2007-10-03', 'MCD', NULL, 2, '2026-10-03 23:42:12', 3, 2, 'activo');
 
 -- --------------------------------------------------------
 
@@ -379,8 +369,10 @@ CREATE TABLE `responsables` (
 --
 
 INSERT INTO `responsables` (`id_responsable`, `nombres`, `apellidos`, `id_tipo_documento`, `identificacion`, `numero_celular`) VALUES
-(9, 'David', 'Martinez', 3, '30947844', '3124500000'),
-(10, 'DAVID', 'MOTTA', 3, '30947844', '3128990223');
+(9, 'David', 'Martines', 3, '30947844', '3124500000'),
+(12, 'David', 'motta', 3, '30947844', '3128990223'),
+(13, 'Juan', 'Martinez', 3, '530947844', '3124500000'),
+(14, 'Marta', 'Martinez', 1, '30947844', '3124500000');
 
 -- --------------------------------------------------------
 
@@ -680,13 +672,13 @@ ALTER TABLE `configuracion_ciclos`
 -- AUTO_INCREMENT de la tabla `deudas`
 --
 ALTER TABLE `deudas`
-  MODIFY `id_deudas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_deudas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos`
 --
 ALTER TABLE `documentos`
-  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_documento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `eps`
@@ -716,7 +708,7 @@ ALTER TABLE `instructor`
 -- AUTO_INCREMENT de la tabla `jugadores`
 --
 ALTER TABLE `jugadores`
-  MODIFY `id_jugadores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_jugadores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `metodo_pago`
@@ -728,7 +720,7 @@ ALTER TABLE `metodo_pago`
 -- AUTO_INCREMENT de la tabla `responsables`
 --
 ALTER TABLE `responsables`
-  MODIFY `id_responsable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_responsable` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `tipos_beca`

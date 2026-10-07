@@ -18,8 +18,9 @@ class PerfilAdminController extends Controller
         ];
 
         $configuracionModel = new Configuracion($this->pdo);
-        $diaCobro = (int) ($configuracionModel->obtenerPorClave('dia_cobro') ?? 5);
-        $diasGracia = (int) ($configuracionModel->obtenerPorClave('dias_gracia') ?? 0);
+        $configPagos = $configuracionModel->obtenerConfiguracionPagos();
+        $diaCobro = $configPagos['dia_cobro'];
+        $diasGracia = $configPagos['dias_gracia'];
 
         $this->view('perfilAdmin/perfil', [
             'admin' => $admin,
@@ -34,10 +35,12 @@ class PerfilAdminController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $this->redirect('/perfil/administrador');
+            return;
         }
 
         if (!$this->validateCSRFToken($_POST['_token'] ?? '')){
             $this->redirect('/perfil/administrador?error=csrf');
+            return;
         }
 
         $diaCobro = (int) ($_POST['dia_cobro'] ?? 0);
@@ -45,15 +48,29 @@ class PerfilAdminController extends Controller
 
         if ($diaCobro < 1 || $diaCobro > 31){
             $this->redirect('/perfil/administrador?error=dia_invalido');
+            return;
         }
 
         if ($diasGracia < 0 || $diasGracia > 30){
             $this->redirect('/perfil/administrador?error=gracia_invalida');
+            return;
         }
 
-        $configuracionModel = new Configuracion($this->pdo);
-        $configuracionModel->actualizar('dia_cobro', (string) $diaCobro);
-        $configuracionModel->actualizar('dias_gracia', (string) $diasGracia);
+        try {
+            $configuracionModel = new Configuracion($this->pdo);
+            $guardado = $configuracionModel->actualizarMultiples([
+                'dia_cobro' => $diaCobro,
+                'dias_gracia' => $diasGracia,
+            ]);
+
+            if (!$guardado) {
+                throw new RuntimeException('No se pudo guardar la configuración de pagos.');
+            }
+        } catch (Throwable $e) {
+            error_log('PerfilAdminController::guardarConfiguracionPagos - ' . $e->getMessage());
+            $this->redirect('/perfil/administrador?error=configuracion_guardado');
+            return;
+        }
 
         $this->redirect('/perfil/administrador?success=configuracion_guardada');
     }

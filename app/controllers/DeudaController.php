@@ -38,28 +38,31 @@ class DeudaController extends Controller
     }
 
 
-    public function mostrarPago(string $id): void
+    public function mostrarPago(int $id): void
     {
-        $idDeuda = (int) $id;
-        $deuda = $this->deudaModel->obtenerPorId($idDeuda);
+        $idDeuda = $id;
 
-        if (!$deuda){
-            echo "Deuda no encontrada";
-            return;
-        }
+        try {
+            $deuda = $this->deudaModel->obtenerPorId($idDeuda);
 
-        try{
+            if (!$deuda) {
+                http_response_code(404);
+                echo 'Deuda no encontrada';
+                return;
+            }
+
             $metodos = $this->metodoPagoModel->obtenerTodos();
-        } catch (Exception $e) {
-            error_log('Duedas (mostrar, cargar métodos):' . $e->getMessage());
-            $metodos = [];
-        }
 
-        $this->view('jugadores/deudasJugadores/create', [
-            'deuda' => $deuda,
-            'metodos' => $metodos,
-            'csrfToken' => $_SESSION['csrf_token'] ?? '',
-        ]);
+            $this->view('jugadores/deudasJugadores/create', [
+                'deuda' => $deuda,
+                'metodos' => $metodos,
+                'csrfToken' => $_SESSION['csrf_token'] ?? '',
+            ]);
+        } catch (Throwable $e) {
+            error_log('DeudaController::mostrarPago - ID deuda ' . $idDeuda . ' - ' . $e->getMessage());
+            http_response_code(500);
+            echo 'No se pudo cargar el formulario de registro de pago.';
+        }
     }
 
     public function registrarPago(): void
