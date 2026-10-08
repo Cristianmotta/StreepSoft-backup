@@ -357,7 +357,7 @@
                                     </div>
                                     <div class="fecha-gracia-texto">
                                         <h3>Periodo de Gracia</h3>
-                                        <p id="resumentDiasGracia"><?= $diasGracia > 0 ? $diasGracia . 'dias de gracia' : 'sin dias de gracia' ?></p>
+                                        <p id="resumentDiasGracia"><?= $diasGracia > 0 ? $diasGracia . ' dias de gracia' : 'sin dias de gracia' ?></p>
                                     </div>
                                 </div>
 
@@ -382,7 +382,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="configuracion-nota">* En meses con menos días, se utilizará automáticamente el último día disponible.</p>
                         </div>
                     </div>
 
