@@ -597,21 +597,25 @@ body {
 .card-configuracion{
     position: relative;
     top: 12px;
-    left: 12px;
+    left: 15px;
+}
+
+.configuracion-texto{
+    margin-left: 15px;
 }
 
 .configuracion-texto h2{
     font-family: "Poppins", sans-serif;
     font-size: 25px;
-    font-weight: 500;
-    color: white;
+    font-weight: bold;
+    color: #D09E10;
 }
 
 .configuracion-texto p{
     font-family: "Poppins", sans-serif;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 300;
-    color: white;
+    color: #888888;
 }
 
 .grid{

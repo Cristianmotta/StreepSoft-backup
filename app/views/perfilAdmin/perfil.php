@@ -273,13 +273,13 @@
                 <div class="card-configuracion">
                     <span class="icon-park-outline--setting-config"></span>
                     <div class="configuracion-texto">
-                        <h2>configuracion de pagos</h2>
+                        <h2>Configuración de pagos</h2>
                         <p>Configure las fechas limites para los pagos de los alumnos</p>
                     </div>
                 </div>
                 
                 <?php if (($_GET['success'] ?? '') === 'configuracion_guardada'): ?>
-                    <p class="modal-mensaje" style="color: #2ecc72">Configuracion guardada</p>
+                    <p class="modal-mensaje" style="color: #2ecc72">Configuración guardada</p>
                 <?php endif; ?>
                 <?php if (($_GET['error'] ?? '') === 'dia_invalido'): ?>
                     <p class="modal-mesaje modal-mensaje-error">Elige und ia de cobro válido.</p>
@@ -388,10 +388,6 @@
                     <div class="btn-configuracion">
                         <button type="submit" class="btn-guardar">
                             Guardar cambios
-                        </button>
-                        
-                        <button type="reset" class="btn-cancelar">
-                            cancelar
                         </button>
                     </div>
                 </form>
